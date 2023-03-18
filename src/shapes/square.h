@@ -11,6 +11,7 @@ class Square : public Shape {
 
         void update(Window& window) override;
         void setOrigin(sf::Vector2f origin);
+        void setColour(sf::Color colour);
 
         sf::Vector2f position;
         sf::Vector2f size;

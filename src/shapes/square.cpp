@@ -27,3 +27,10 @@ void Square::setOrigin(sf::Vector2f origin) {
     this->mVertices[2] = sf::Vector2f(position.x + this->size.x, position.y + this->size.y);
     this->mVertices[3] = sf::Vector2f(position.x, position.y + this->size.y);
 }
+
+void Square::setColour(sf::Color colour) {
+    this->mVertices[0].color = colour;
+    this->mVertices[1].color = colour;
+    this->mVertices[2].color = colour;
+    this->mVertices[3].color = colour;
+}
