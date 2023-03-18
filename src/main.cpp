@@ -1,5 +1,6 @@
 #include <iostream>
 #include "shapes/square.h"
+#include "physics/collision.h"
 
 int main(int, char**) {
     Window window(sf::VideoMode(1280, 720), "2D Physics engine");
@@ -33,16 +34,26 @@ int main(int, char**) {
     slant.setColour(sf::Color::Blue);
     flatLow.setColour(sf::Color::Magenta);
 
+    // Physics
+    StaticBody pFloor(floor);
+    StaticBody pFlatHigh(flatHigh);
+    StaticBody pFlatMedium(flatMedium);
+    StaticBody pSlant(slant);
+    StaticBody pFlatLow(flatLow);
+
+    // Collision groups
+    Collision group;
+    group.addObject(pFloor);
+    group.addObject(pFlatHigh);
+    group.addObject(pFlatMedium);
+    group.addObject(pSlant);
+    group.addObject(pFlatLow);
+
     while(window.open) {
         window.events();
         window.clear();
 
-        floor.update(window);
-
-        flatHigh.update(window);
-        flatMedium.update(window);
-        slant.update(window);
-        flatLow.update(window);
+        group.update(window);
 
         window.render();
     }

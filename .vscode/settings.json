@@ -4,6 +4,7 @@
         "xlocale": "cpp",
         "fstream": "cpp",
         "xlocmes": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "cmath": "cpp"
     }
 }
