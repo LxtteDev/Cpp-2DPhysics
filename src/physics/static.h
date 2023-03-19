@@ -1,4 +1,4 @@
-#include <vector>
+#include <SFML/Graphics.hpp>
 #include "../window/window.h"
 #include "../shapes/shape.h"
 
@@ -9,11 +9,11 @@ class StaticBody {
     public:
         StaticBody(Shape& shape);
 
-        void update(Window& window);
+        virtual void update(Window& window, std::vector<StaticBody*>& objects);
 
         sf::Vector2f position; // The first point
 
-    private:
+    protected:
         sf::Vector2f lastPosition;
         Shape& mShape;
 };

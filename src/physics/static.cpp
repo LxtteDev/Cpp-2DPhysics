@@ -5,11 +5,11 @@ StaticBody::StaticBody(Shape& shape): mShape(shape) {
     this->lastPosition = this->position;
 };
 
-void StaticBody::update(Window& window) {
+void StaticBody::update(Window& window, std::vector<StaticBody*>& objects) {
     if (this->lastPosition != this->position) {
         sf::Vector2f offset = this->position - this->lastPosition;
 
-        for (int i = 0; i < this->mShape.vertices.getVertexCount(); i++)
+        for (unsigned int i = 0; i < this->mShape.vertices.getVertexCount(); i++)
             this->mShape.vertices[i].position += offset;
 
         this->lastPosition = this->position;

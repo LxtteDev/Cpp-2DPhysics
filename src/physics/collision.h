@@ -1,5 +1,5 @@
 #include <vector>
-#include "static.h"
+#include "rigid.h"
 
 #ifndef COLLISION_H_
 #define COLLISION_H_

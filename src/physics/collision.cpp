@@ -4,8 +4,8 @@ Collision::Collision() {
 }
 
 void Collision::update(Window& window) {
-    for (StaticBody* object : this->objects) {
-        object->update(window);
+    for (auto object : this->objects) {
+        object->update(window, this->objects);
     }
 }
 

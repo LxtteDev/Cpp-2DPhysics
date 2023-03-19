@@ -6,15 +6,15 @@ int main(int, char**) {
     Window window(sf::VideoMode(1280, 720), "2D Physics engine");
 
     // Create floor
-    sf::VertexArray floorVerts(sf::TriangleStrip, 8);
-    floorVerts[1] = sf::Vector2f(0.0f, 570.0f);
-    floorVerts[0] = sf::Vector2f(320.0f, 570.0f);
-    floorVerts[2] = sf::Vector2f(320.0f, 620.0f);
-    floorVerts[4] = sf::Vector2f(640.0f, 620.0f);
-    floorVerts[6] = sf::Vector2f(960.0f, 670.0f);
-    floorVerts[7] = sf::Vector2f(1280.0f, 670.0f);
-    floorVerts[5] = sf::Vector2f(1280.0f, 720.0f);
-    floorVerts[3] = sf::Vector2f(0.0f, 720.0f);
+    sf::VertexArray floorVerts(sf::LineStrip, 8);
+    floorVerts[0] = sf::Vector2f(0.0f, 570.0f);     // 1
+    floorVerts[1] = sf::Vector2f(320.0f, 570.0f);   // 0
+    floorVerts[2] = sf::Vector2f(320.0f, 620.0f);   // 2
+    floorVerts[3] = sf::Vector2f(640.0f, 620.0f);   // 4
+    floorVerts[4] = sf::Vector2f(960.0f, 670.0f);   // 6
+    floorVerts[5] = sf::Vector2f(1280.0f, 670.0f);  // 7
+    floorVerts[6] = sf::Vector2f(1280.0f, 720.0f);  // 5
+    floorVerts[7] = sf::Vector2f(0.0f, 720.0f);     // 3
 
     Shape floor(floorVerts);
 
@@ -26,10 +26,10 @@ int main(int, char**) {
 
     // Physics
     StaticBody pFloor(floor);
-    StaticBody pFlatHigh(flatHigh);
-    StaticBody pFlatMedium(flatMedium);
-    StaticBody pSlant(slant);
-    StaticBody pFlatLow(flatLow);
+    RigidBody pFlatHigh(flatHigh);
+    RigidBody pFlatMedium(flatMedium);
+    RigidBody pSlant(slant);
+    RigidBody pFlatLow(flatLow);
 
     // Collision groups
     Collision group;
@@ -42,8 +42,6 @@ int main(int, char**) {
     while(window.open) {
         window.events();
         window.clear();
-
-        pFlatHigh.position += sf::Vector2f(5.0f, 5.0f) * window.deltaTime;
 
         group.update(window);
 
