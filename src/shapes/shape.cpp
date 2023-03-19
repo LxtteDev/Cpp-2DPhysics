@@ -1,8 +1,8 @@
 #include "shape.h"
 
-Shape::Shape(sf::VertexArray vertices): mVertices(vertices) {};
+Shape::Shape(sf::VertexArray vertices): vertices(vertices) {};
 
 void Shape::update(Window& window) {
-    window.draw(this->mVertices);
+    window.draw(this->vertices);
 }
 

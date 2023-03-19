@@ -7,18 +7,9 @@
 
 class Square : public Shape {
     public:
-        Square(sf::Vector2f position, sf::Vector2f size, float rotation);
+        Square(sf::Vector2f position, sf::Vector2f size, sf::Color colour = sf::Color::White);
 
         void update(Window& window) override;
-        void setOrigin(sf::Vector2f origin);
-        void setColour(sf::Color colour);
-
-        sf::Vector2f position;
-        sf::Vector2f size;
-        float rotation;
-
-    private:
-        sf::Vector2f offset;
 };
 
 #endif

@@ -19,20 +19,10 @@ int main(int, char**) {
     Shape floor(floorVerts);
 
     // Boxes
-    Square flatHigh(sf::Vector2f(160.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), 0.0f);
-    Square flatMedium(sf::Vector2f(480.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), 0.0f);
-    Square slant(sf::Vector2f(800.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), 0.0f);
-    Square flatLow(sf::Vector2f(1120.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), 0.0f);
-
-    flatHigh.setOrigin(sf::Vector2f(0.5f, 0.5f));
-    flatMedium.setOrigin(sf::Vector2f(0.5f, 0.5f));
-    slant.setOrigin(sf::Vector2f(0.5f, 0.5f));
-    flatLow.setOrigin(sf::Vector2f(0.5f, 0.5f));
-
-    flatHigh.setColour(sf::Color::Red);
-    flatMedium.setColour(sf::Color::Green);
-    slant.setColour(sf::Color::Blue);
-    flatLow.setColour(sf::Color::Magenta);
+    Square flatHigh(sf::Vector2f(160.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Red);
+    Square flatMedium(sf::Vector2f(480.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Green);
+    Square slant(sf::Vector2f(800.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Blue);
+    Square flatLow(sf::Vector2f(1120.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Magenta);
 
     // Physics
     StaticBody pFloor(floor);
@@ -52,6 +42,8 @@ int main(int, char**) {
     while(window.open) {
         window.events();
         window.clear();
+
+        pFlatHigh.position += sf::Vector2f(5.0f, 5.0f) * window.deltaTime;
 
         group.update(window);
 

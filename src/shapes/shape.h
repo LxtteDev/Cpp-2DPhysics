@@ -9,8 +9,7 @@ class Shape {
 
         virtual void update(Window& window);
 
-    protected:
-        sf::VertexArray mVertices;
+        sf::VertexArray vertices;
 };
 
 #endif
