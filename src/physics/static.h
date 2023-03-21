@@ -10,6 +10,8 @@ class StaticBody {
         StaticBody(Shape& shape);
 
         virtual void update(Window& window, std::vector<StaticBody*>& objects);
+        sf::VertexArray& getVertices();
+        sf::FloatRect getBoundingBox();
 
         sf::Vector2f position; // The first point
 

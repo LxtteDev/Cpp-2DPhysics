@@ -17,3 +17,11 @@ void StaticBody::update(Window& window, std::vector<StaticBody*>& objects) {
 
     this->mShape.update(window);
 }
+
+sf::VertexArray& StaticBody::getVertices() {
+    return this->mShape.vertices;
+}
+
+sf::FloatRect StaticBody::getBoundingBox() {
+    return this->mShape.getBoundingBox();
+}
