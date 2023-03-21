@@ -8,6 +8,7 @@ class Shape {
         Shape(sf::VertexArray vertices);
 
         virtual void update(Window& window);
+        sf::FloatRect getBoundingBox();
 
         sf::VertexArray vertices;
 };
