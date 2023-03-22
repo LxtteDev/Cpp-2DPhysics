@@ -1,5 +1,6 @@
 #include <iostream>
 #include "shapes/square.h"
+#include "shapes/bounding.h"
 #include "physics/collision.h"
 
 int main(int, char**) {
@@ -39,11 +40,20 @@ int main(int, char**) {
     group.addObject(pSlant);
     group.addObject(pFlatLow);
 
+    // Bounding boxes
+    Collision boxes;
+
+    BoundingBox bFloor(floor.getBoundingBox(), sf::Color::Red);
+    StaticBody BFloor(bFloor);
+
+    boxes.addObject(BFloor);
+
     while(window.open) {
         window.events();
         window.clear();
 
         group.update(window);
+        boxes.update(window);
 
         window.render();
     }

@@ -14,6 +14,7 @@ class RigidBody : public StaticBody {
 
         sf::Vector2f velocity;
         sf::Vector2f acceleration;
+        bool colliding = false;
 };
 
 #endif
