@@ -11,6 +11,10 @@ class Shape {
         sf::FloatRect getBoundingBox();
 
         sf::VertexArray vertices;
+        float rotation = 0.0f;
+
+    private:
+        float lastRotation = 0.0f;
 };
 
 #endif
