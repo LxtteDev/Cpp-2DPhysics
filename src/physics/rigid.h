@@ -8,7 +8,7 @@
 
 class RigidBody : public StaticBody {
     public:
-        RigidBody(Shape& shape);
+        RigidBody(Shape* shape);
 
         void update(Window& window, std::vector<StaticBody*>& objects) override;
 

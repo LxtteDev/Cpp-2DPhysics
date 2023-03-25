@@ -12,12 +12,12 @@ bool inBounding(sf::FloatRect boundingA, sf::FloatRect boundingB) {
     return false;
 }
 
-RigidBody::RigidBody(Shape& shape): StaticBody(shape) {};
+RigidBody::RigidBody(Shape* shape): StaticBody(shape) {};
 
 void RigidBody::update(Window& window, std::vector<StaticBody*>& objects) {
     this->velocity += (this->acceleration + sf::Vector2f(0.0f, gravity)) * window.deltaTime;
 
-    sf::FloatRect bounding = this->mShape.getBoundingBox();
+    sf::FloatRect bounding = this->mShape->getBoundingBox();
 
     this->colliding = false;
     for (StaticBody* body : objects) {
@@ -27,7 +27,8 @@ void RigidBody::update(Window& window, std::vector<StaticBody*>& objects) {
 
         // Check in bounding box
         if (inBounding(bounding, mBounding)) {
-            this->colliding = body->checkCollides(this);
+            // this->colliding = body->checkCollides(this);
+            this->colliding = body->intersects(this->mShape);
 
             // Handle collision
             if (this->colliding) {
