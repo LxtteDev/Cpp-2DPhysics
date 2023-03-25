@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "static.h"
+#include "../math/vector.h"
 
 #ifndef RIGID_H_
 #define RIGID_H_

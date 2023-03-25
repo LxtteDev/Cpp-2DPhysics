@@ -25,3 +25,7 @@ sf::VertexArray& StaticBody::getVertices() {
 sf::FloatRect StaticBody::getBoundingBox() {
     return this->mShape.getBoundingBox();
 }
+
+float StaticBody::getRotation() {
+    return this->mShape.rotation;
+}
