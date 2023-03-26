@@ -21,12 +21,17 @@ sf::Vector2<T> operator *(const sf::Vector2<T>& left, const sf::Vector2<T>& righ
 
 template <typename T>
 float VectorDot(const sf::Vector2<T>& a, const sf::Vector2<T>& b) {
-    return (a.x * b.x) + (a.y * b.y);
+    return a.x * b.x + a.y * b.y;
 }
 
 template <typename T>
 sf::Vector2<T> VectorNormalize(const sf::Vector2<T>& a) {
     return a / std::sqrt(a.x * a.x + a.y * a.y);
+}
+
+template <typename T>
+sf::Vector2<T> VectorAbs(const sf::Vector2<T>& a) {
+    return sf::Vector2f(std::abs(a.x), std::abs(a.y));
 }
 
 #endif
