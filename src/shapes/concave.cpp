@@ -62,75 +62,72 @@ Concave::Concave(sf::VertexArray vertices): Shape(vertices) {
 
 bool Concave::intersects(Shape* shape) {
     // Shape
-    sf::VertexArray& vertices = this->vertices;
-    // sf::VertexArray& mVertices = shape->vertices;
     sf::FloatRect mBounding = shape->getBoundingBox();
-    // std::cout << "(" << mBounding.left << ", " << mBounding.top << "), (" << mBounding.width << ", " << mBounding.height << ")" << std::endl;
 
-    for (unsigned int i = 0; i < vertices.getVertexCount(); i += 3) {
-        sf::Vector2f A = vertices[i].position;
-        sf::Vector2f B = vertices[(i + 1) % vertices.getVertexCount()].position;
-        sf::Vector2f C = vertices[(i + 2) % vertices.getVertexCount()].position;
+    for (unsigned int i = 0; i < this->vertices.getVertexCount(); i += 3) {
+        sf::Vector2f A = this->vertices[i].position;
+        sf::Vector2f B = this->vertices[(i + 1) % this->vertices.getVertexCount()].position;
+        sf::Vector2f C = this->vertices[(i + 2) % this->vertices.getVertexCount()].position;
 
         sf::FloatRect bounding = triangleBounding(A, B, C);
-        // std::cout << "(" << bounding.left << ", " << bounding.top << "), (" << bounding.width << ", " << bounding.height << ")" << std::endl;
 
-        if (inBounding(bounding, mBounding)) {
-            std::cout << "true" << std::endl;
+        if (inBounding(mBounding, bounding)) { // Inside triangle bounding box
+            // Shape
+            sf::VertexArray vertices(sf::Points, 3); vertices[0] = A; vertices[1] = B; vertices[2] = C;
+            sf::VertexArray& mVertices = shape->vertices;
+
+            // Projections
+            std::vector<sf::Vector2f> normals(vertices.getVertexCount());
+            std::vector<sf::Vector2f> mNormals(mVertices.getVertexCount());
+
+            for (unsigned int i = 0; i < vertices.getVertexCount(); i++) {
+                sf::Vector2f current = vertices[i].position;
+                sf::Vector2f next = vertices[(i + 1) % vertices.getVertexCount()].position;
+
+                sf::Vector2f direction = next - current;
+                sf::Vector2f normal(direction.y, -direction.x);
+
+                normals[i] = VectorNormalize(normal);
+            }
+
+            for (unsigned int i = 0; i < mVertices.getVertexCount(); i++) {
+                sf::Vector2f current = mVertices[i].position;
+                sf::Vector2f next = mVertices[(i + 1) % mVertices.getVertexCount()].position;
+
+                sf::Vector2f direction = next - current;
+                sf::Vector2f normal(direction.y, -direction.x);
+
+                mNormals[i] = VectorNormalize(normal);
+            }
+
+            // Check collisions
+            for (unsigned int i = 0; i < normals.size() + mNormals.size(); i++) {
+                sf::Vector2f normal = (i >= normals.size() ? mNormals : normals)[i % normals.size()];
+
+                float aMin = FLT_MAX, aMax = FLT_MIN, bMin = FLT_MAX, bMax = FLT_MIN;
+
+                for (unsigned int j = 0; j < vertices.getVertexCount(); j++) {
+                    float projection = VectorDot(vertices[j].position, normal);
+
+                    aMin = std::min(aMin, projection);
+                    aMax = std::max(aMax, projection);
+                }
+
+                for (unsigned int j = 0; j < mVertices.getVertexCount(); j++) {
+                    float projection = VectorDot(mVertices[j].position, normal);
+
+                    bMin = std::min(bMin, projection);
+                    bMax = std::max(bMax, projection);
+                }
+
+                if(aMax < bMin || bMax < aMin) {
+                    return false;
+                }
+            }
+
             return true;
         }
     }
 
     return false;
-
-    /* // Projections
-    std::vector<sf::Vector2f> normals(triangles.size());
-    std::vector<sf::Vector2f> mNormals(mVertices.getVertexCount());
-
-    for (unsigned int i = 0; i < triangles.size(); i++) {
-        sf::Vector2f current = vertices[i].position;
-        sf::Vector2f next = vertices[(i + 1) % vertices.getVertexCount()].position;
-
-        sf::Vector2f direction = next - current;
-        sf::Vector2f normal(direction.y, -direction.x);
-
-        normals[i] = VectorNormalize(normal);
-    }
-
-    for (unsigned int i = 0; i < mVertices.getVertexCount(); i++) {
-        sf::Vector2f current = mVertices[i].position;
-        sf::Vector2f next = mVertices[(i + 1) % mVertices.getVertexCount()].position;
-
-        sf::Vector2f direction = next - current;
-        sf::Vector2f normal(direction.y, -direction.x);
-
-        mNormals[i] = VectorNormalize(normal);
-    }
-
-    // Check collisions
-    for (unsigned int i = 0; i < normals.size() + mNormals.size(); i++) {
-        sf::Vector2f normal = (i >= normals.size() ? mNormals : normals)[i % normals.size()];
-
-        float aMin = FLT_MAX, aMax = FLT_MIN, bMin = FLT_MAX, bMax = FLT_MIN;
-
-        for (unsigned int j = 0; j < vertices.getVertexCount(); j++) {
-            float projection = VectorDot(vertices[j].position, normal);
-
-            aMin = std::min(aMin, projection);
-            aMax = std::max(aMax, projection);
-        }
-
-        for (unsigned int j = 0; j < mVertices.getVertexCount(); j++) {
-            float projection = VectorDot(mVertices[j].position, normal);
-
-            bMin = std::min(bMin, projection);
-            bMax = std::max(bMax, projection);
-        }
-
-        if(aMax < bMin || bMax < aMin) {
-            return false;
-        }
-    }
-
-    return true; */
 }

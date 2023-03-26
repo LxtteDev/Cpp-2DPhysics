@@ -25,12 +25,11 @@ int main(int, char**) {
     floorVerts[7] = sf::Vector2f(0.0f, 720.0f);     // 7 3
 
     Concave floor(floorVerts);
-    BoundingBox floorOutline(floor.getBoundingBox(), sf::Color::Blue);
     // Square floor(sf::Vector2f(400.0f, 470.0f), sf::Vector2f(400.0f, 200.0f));
     // floor.rotation = 15.0f;
 
     // Boxes
-    Square red(sf::Vector2f(520.0f, 200.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Red);
+    Square red(sf::Vector2f(700.0f, 200.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Red);
     Square green(sf::Vector2f(220.0f, 50.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Green);
     Square blue(sf::Vector2f(800.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Blue);
     Square magenta(sf::Vector2f(1120.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Magenta);
@@ -55,7 +54,6 @@ int main(int, char**) {
         window.clear();
 
         group.update(window);
-        floorOutline.update(window);
 
         window.render();
     }
