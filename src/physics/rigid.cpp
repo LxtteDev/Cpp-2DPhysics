@@ -3,15 +3,6 @@
 const float gravity = 50.0f;
 const float threshold = 1.0f;
 
-bool inBounding(sf::FloatRect boundingA, sf::FloatRect boundingB) {
-    if (((boundingA.left > boundingB.left && boundingA.left < boundingB.left + boundingB.width) ||
-             (boundingA.left + boundingA.width > boundingB.left && boundingA.left + boundingA.width < boundingB.left + boundingB.width)) &&
-            ((boundingA.top > boundingB.top && boundingA.top < boundingB.top + boundingB.height) || 
-             (boundingA.top + boundingA.height > boundingB.top && boundingA.top + boundingA.height < boundingB.top + boundingB.height))
-    ) return true;
-    return false;
-}
-
 RigidBody::RigidBody(Shape* shape): StaticBody(shape) {};
 
 void RigidBody::update(Window& window, std::vector<StaticBody*>& objects) {

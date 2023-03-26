@@ -25,9 +25,7 @@ int main(int, char**) {
     floorVerts[7] = sf::Vector2f(0.0f, 720.0f);     // 7 3
 
     Concave floor(floorVerts);
-
-    changeColour(floorVerts, sf::Color::Blue);
-    Shape floorOutline(floorVerts);
+    BoundingBox floorOutline(floor.getBoundingBox(), sf::Color::Blue);
     // Square floor(sf::Vector2f(400.0f, 470.0f), sf::Vector2f(400.0f, 200.0f));
     // floor.rotation = 15.0f;
 
@@ -38,7 +36,7 @@ int main(int, char**) {
     Square magenta(sf::Vector2f(1120.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Magenta);
 
     // Physics
-    // StaticBody pFloor(&floor);
+    StaticBody pFloor(&floor);
     RigidBody pRed(&red);
     RigidBody pGreen(&green);
     RigidBody pBlue(&blue);
@@ -46,7 +44,7 @@ int main(int, char**) {
 
     // Collision groups
     Collision group;
-    // group.addObject(pFloor);
+    group.addObject(pFloor);
     group.addObject(pRed);
     // group.addObject(pGreen);
     // group.addObject(pBlue);
@@ -57,8 +55,6 @@ int main(int, char**) {
         window.clear();
 
         group.update(window);
-
-        floor.update(window);
         floorOutline.update(window);
 
         window.render();
