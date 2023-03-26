@@ -10,6 +10,7 @@ class Shape {
 
         virtual void update(Window& window);
         virtual bool intersects(Shape* shape);
+        virtual void setColour(sf::Color colour);
         sf::FloatRect getBoundingBox(bool selfCalled = false);
 
         sf::VertexArray vertices;

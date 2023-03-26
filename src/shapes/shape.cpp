@@ -80,6 +80,11 @@ bool Shape::intersects(Shape* shape) { // m -> body
     return true;
 }
 
+void Shape::setColour(sf::Color colour) {
+    for (unsigned int i = 0; i < this->vertices.getVertexCount(); i++)
+        this->vertices[i].color = colour;
+}
+
 sf::FloatRect Shape::getBoundingBox(bool selfCalled) {
     if (!selfCalled) Shape::updateVerts();
 
