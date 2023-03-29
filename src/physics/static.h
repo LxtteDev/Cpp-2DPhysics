@@ -1,5 +1,3 @@
-#include <SFML/Graphics.hpp>
-#include "../window/window.h"
 #include "../shapes/shape.h"
 
 #ifndef STATIC_H_

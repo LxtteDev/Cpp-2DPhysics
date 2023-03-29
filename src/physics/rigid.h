@@ -1,8 +1,6 @@
-#include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
 #include "static.h"
-#include "../math/rect.h"
 
 #ifndef RIGID_H_
 #define RIGID_H_
