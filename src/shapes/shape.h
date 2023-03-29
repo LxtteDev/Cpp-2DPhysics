@@ -1,5 +1,5 @@
+#include "../collisions/intersect.h"
 #include "../window/window.h"
-#include "../math/vector.h"
 
 #ifndef SHAPE_H_
 #define SHAPE_H_
