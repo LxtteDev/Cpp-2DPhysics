@@ -6,10 +6,9 @@
 #define INTERSECT_H_
 
 // Functions
-template <typename T>
-sf::Vector2<T> projectOnAxis(sf::VertexArray& a, sf::Vector2<T>& axis) { // Min, max
+inline sf::Vector2f projectOnAxis(sf::VertexArray& a, sf::Vector2f& axis) { // Min, max
     float proj = VectorDot(a[0].position, axis);
-    sf::Vector<T> projection(proj, proj); // Min, max
+    sf::Vector2f projection(proj, proj); // Min, max
 
     for (unsigned int i = 1; i < a.getVertexCount(); i++) {
         float proj = VectorDot(a[i].position, axis);
@@ -18,7 +17,7 @@ sf::Vector2<T> projectOnAxis(sf::VertexArray& a, sf::Vector2<T>& axis) { // Min,
         projection.y = std::max(proj, projection.y);
     }
 
-    return proj; // Min, max
+    return projection; // Min, max
 }
 
 template <typename T>
@@ -31,7 +30,7 @@ float projectionOverlap(sf::Vector2<T> a, sf::Vector2<T> b) {
 }
 
 // Collisions
-inline bool doesIntersect(sf::VertexArray& a, sf::VertexArray& b) { // Cheaper but less accurate
+inline bool seperatingAxis(sf::VertexArray& a, sf::VertexArray& b) { // Cheaper but less accurate
     // Projections
     std::vector<sf::Vector2f> aNormals(a.getVertexCount());
     std::vector<sf::Vector2f> bNormals(b.getVertexCount());
@@ -121,10 +120,9 @@ inline std::vector<sf::Vector2f> edgeClip(sf::VertexArray& a, sf::VertexArray& b
     return output;
 };
 
-template <typename T>
-sf::Vector2<T> gilbertIntersection(sf::VertexArray& a, sf::VertexArray& b) {
+inline sf::Vector2f gilbertIntersection(sf::VertexArray& a, sf::VertexArray& b) {
     float minOverlap = std::numeric_limits<float>::infinity();
-    sf::Vector2<T> smallestOverlapAxis;
+    sf::Vector2f smallestOverlapAxis;
 
     for (unsigned int i = 0; i < a.getVertexCount(); i++) {
         sf::Vector2f normal = VectorNormal(a[i].position, a[(i + 1) % a.getVertexCount()].position);
@@ -138,7 +136,7 @@ sf::Vector2<T> gilbertIntersection(sf::VertexArray& a, sf::VertexArray& b) {
             return sf::Vector2f();
         else if (overlap < minOverlap) {
             minOverlap = overlap;
-            smallestOverlapAxis = axis;
+            smallestOverlapAxis = normal;
         }
     }
 
@@ -154,7 +152,7 @@ sf::Vector2<T> gilbertIntersection(sf::VertexArray& a, sf::VertexArray& b) {
             return sf::Vector2f();
         else if (overlap < minOverlap) {
             minOverlap = overlap;
-            smallestOverlapAxis = axis;
+            smallestOverlapAxis = normal;
         }
     }
 

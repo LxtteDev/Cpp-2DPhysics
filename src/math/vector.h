@@ -36,7 +36,7 @@ sf::Vector2<T> VectorAbs(const sf::Vector2<T>& a) {
 
 template <typename T>
 sf::Vector2<T> VectorNormal(const sf::Vector2<T>& a, const sf::Vector2<T>& b) {
-    sf::Vector2f direction = next - current;
+    sf::Vector2f direction = b - a;
     sf::Vector2f normal(direction.y, -direction.x);
 
     return VectorNormalize(normal);
