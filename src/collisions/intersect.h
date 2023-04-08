@@ -5,6 +5,32 @@
 #ifndef INTERSECT_H_
 #define INTERSECT_H_
 
+// Functions
+template <typename T>
+sf::Vector2<T> projectOnAxis(sf::VertexArray& a, sf::Vector2<T>& axis) { // Min, max
+    float proj = VectorDot(a[0].position, axis);
+    sf::Vector<T> projection(proj, proj); // Min, max
+
+    for (unsigned int i = 1; i < a.getVertexCount(); i++) {
+        float proj = VectorDot(a[i].position, axis);
+
+        projection.x = std::min(proj, projection.x);
+        projection.y = std::max(proj, projection.y);
+    }
+
+    return proj; // Min, max
+}
+
+template <typename T>
+float projectionOverlap(sf::Vector2<T> a, sf::Vector2<T> b) {
+    if (a.y < b.x || b.y < a.x) {
+        return 0;
+    }
+
+    return std::min(a.y, b.y) - std::max(a.x, b.x);
+}
+
+// Collisions
 inline bool doesIntersect(sf::VertexArray& a, sf::VertexArray& b) { // Cheaper but less accurate
     // Projections
     std::vector<sf::Vector2f> aNormals(a.getVertexCount());
@@ -94,6 +120,46 @@ inline std::vector<sf::Vector2f> edgeClip(sf::VertexArray& a, sf::VertexArray& b
 
     return output;
 };
+
+template <typename T>
+sf::Vector2<T> gilbertIntersection(sf::VertexArray& a, sf::VertexArray& b) {
+    float minOverlap = std::numeric_limits<float>::infinity();
+    sf::Vector2<T> smallestOverlapAxis;
+
+    for (unsigned int i = 0; i < a.getVertexCount(); i++) {
+        sf::Vector2f normal = VectorNormal(a[i].position, a[(i + 1) % a.getVertexCount()].position);
+
+        sf::Vector2f projectionA = projectOnAxis(a, normal);
+        sf::Vector2f projectionB = projectOnAxis(b, normal);
+
+        float overlap = projectionOverlap(projectionA, projectionB);
+
+        if (overlap == 0)
+            return sf::Vector2f();
+        else if (overlap < minOverlap) {
+            minOverlap = overlap;
+            smallestOverlapAxis = axis;
+        }
+    }
+
+    for (unsigned int i = 0; i < b.getVertexCount(); i++) {
+        sf::Vector2f normal = VectorNormal(b[i].position, b[(i + 1) % b.getVertexCount()].position);
+
+        sf::Vector2f projectionA = projectOnAxis(a, normal);
+        sf::Vector2f projectionB = projectOnAxis(b, normal);
+
+        float overlap = projectionOverlap(projectionA, projectionB);
+
+        if (overlap == 0)
+            return sf::Vector2f();
+        else if (overlap < minOverlap) {
+            minOverlap = overlap;
+            smallestOverlapAxis = axis;
+        }
+    }
+
+    return smallestOverlapAxis * minOverlap;
+}   
 
 #pragma once
 
