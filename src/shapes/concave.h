@@ -15,7 +15,7 @@ class Concave : public Shape {
     public:
         Concave(sf::VertexArray vertices);
 
-        bool intersects(Shape* shape) override;
+        sf::Vector2f intersects(Shape* shape) override;
 };
 
 #endif

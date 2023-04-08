@@ -14,17 +14,18 @@ int main(int, char**) {
     Window window(sf::VideoMode(1280, 720), "2D Physics engine");
 
     // Create floor
-    sf::VertexArray floorVerts(sf::LineStrip, 3);
-    // floorVerts[0] = sf::Vector2f(0.0f, 570.0f);     // 0 1
-    // floorVerts[1] = sf::Vector2f(320.0f, 570.0f);   // 1 0
-    floorVerts[0] = sf::Vector2f(320.0f, 620.0f);   // 2 2
-    floorVerts[1] = sf::Vector2f(640.0f, 620.0f);   // 3 4
-    floorVerts[2] = sf::Vector2f(960.0f, 670.0f);   // 4 6
-    // floorVerts[5] = sf::Vector2f(1280.0f, 670.0f);  // 5 7
-    // floorVerts[6] = sf::Vector2f(1280.0f, 720.0f);  // 6 5
-    // floorVerts[7] = sf::Vector2f(0.0f, 720.0f);     // 7 3
+    sf::VertexArray floorVerts(sf::Points, 8);
+    floorVerts[0] = sf::Vector2f(0.0f, 570.0f);     // 0 1
+    floorVerts[1] = sf::Vector2f(320.0f, 570.0f);   // 1 0
+    floorVerts[2] = sf::Vector2f(320.0f, 620.0f);   // 2 2
+    floorVerts[3] = sf::Vector2f(640.0f, 620.0f);   // 3 4
+    floorVerts[4] = sf::Vector2f(960.0f, 670.0f);   // 4 6
+    floorVerts[5] = sf::Vector2f(1280.0f, 670.0f);  // 5 7
+    floorVerts[6] = sf::Vector2f(1280.0f, 720.0f);  // 6 5
+    floorVerts[7] = sf::Vector2f(0.0f, 720.0f);     // 7 3
 
-    Shape floor(floorVerts);
+    // Shape floor(floorVerts);
+    Concave floor(floorVerts);
 
     // Boxes
     Square red(sf::Vector2f(700.0f, 200.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Red);
@@ -46,6 +47,7 @@ int main(int, char**) {
     // group.addObject(pGreen);
     // group.addObject(pBlue);
     // group.addObject(pMagenta);
+
 
 
     while(window.open) {

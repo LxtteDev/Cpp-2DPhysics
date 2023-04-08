@@ -23,8 +23,9 @@ void Shape::update(Window& window) {
     window.draw(this->vertices);
 }
 
-bool Shape::intersects(Shape* shape) { // m -> body
-    return doesIntersect(this->vertices, shape->vertices);
+sf::Vector2f Shape::intersects(Shape* shape) { // m -> body
+    // return doesIntersect(this->vertices, shape->vertices);
+    return gilbertIntersection(this->vertices, shape->vertices);
 }
 
 void Shape::setColour(sf::Color colour) {

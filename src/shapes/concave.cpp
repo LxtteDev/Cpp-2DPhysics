@@ -60,7 +60,7 @@ Concave::Concave(sf::VertexArray vertices): Shape(vertices) {
     }
 }
 
-bool Concave::intersects(Shape* shape) {
+sf::Vector2f Concave::intersects(Shape* shape) {
     // Shape
     sf::FloatRect mBounding = shape->getBoundingBox();
 
@@ -77,9 +77,11 @@ bool Concave::intersects(Shape* shape) {
             triangleVerts[1] = B;
             triangleVerts[2] = C;
 
-            return doesIntersect(this->vertices, triangleVerts);
+            // return doesIntersect(this->vertices, triangleVerts);
+            sf::Vector2f offset = gilbertIntersection(triangleVerts, shape->vertices);
+            return offset;
         }
     }
 
-    return false;
+    return sf::Vector2f();
 }

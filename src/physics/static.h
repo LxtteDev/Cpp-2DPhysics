@@ -8,7 +8,7 @@ class StaticBody {
         StaticBody(Shape* shape);
 
         virtual void update(Window& window, std::vector<StaticBody*>& objects);
-        bool intersects(Shape* shape);
+        sf::Vector2f intersects(Shape* shape);
         sf::VertexArray& getVertices();
         sf::FloatRect getBoundingBox();
         float getRotation();

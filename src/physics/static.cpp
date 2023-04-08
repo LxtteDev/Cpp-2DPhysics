@@ -18,7 +18,7 @@ void StaticBody::update(Window& window, std::vector<StaticBody*>& objects) {
     this->mShape->update(window);
 }
 
-bool StaticBody::intersects(Shape* shape) {
+sf::Vector2f StaticBody::intersects(Shape* shape) {
     return this->mShape->intersects(shape);
 }
 
