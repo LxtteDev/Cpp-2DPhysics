@@ -17,6 +17,7 @@ sf::FloatRect triangleBounding(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c) {
     sf::Vector2f A(std::min(a.x, std::min(b.x, c.x)), std::min(a.y, std::min(b.y, c.y)));
     sf::Vector2f B(std::max(a.x, std::max(b.x, c.x)), std::max(a.y, std::max(b.y, c.y)));
 
+    // return sf::FloatRect(A  - sf::Vector2f(5.0f, 5.0f), B + sf::Vector2f(5.0f, 5.0f) - A);
     return sf::FloatRect(A, B - A);
 }
 
@@ -60,9 +61,17 @@ Concave::Concave(sf::VertexArray vertices): Shape(vertices) {
     }
 }
 
+void Concave::update(Window& window) {
+    window.draw(this->vertices);
+
+    for (unsigned int i = 0; i < this->vertices.getVertexCount(); i++)
+        this->vertices[i].color = sf::Color::White;
+}
+
 sf::Vector2f Concave::intersects(Shape* shape) {
     // Shape
     sf::FloatRect mBounding = shape->getBoundingBox();
+    sf::Vector2f offset(0.0f, 0.0f);
 
     for (unsigned int i = 0; i < this->vertices.getVertexCount(); i += 3) {
         sf::Vector2f A = this->vertices[i].position;
@@ -72,16 +81,24 @@ sf::Vector2f Concave::intersects(Shape* shape) {
         sf::FloatRect bounding = triangleBounding(A, B, C);
 
         if (inBounding(mBounding, bounding)) { // Inside triangle bounding box
+            sf::Color colour(i * 10 + 10, i * 12 + 10, i * 13 + 10); // 3
+
+            this->vertices[i].color = colour;
+            this->vertices[(i + 1) % this->vertices.getVertexCount()].color = colour;
+            this->vertices[(i + 2) % this->vertices.getVertexCount()].color = colour;
+
             sf::VertexArray triangleVerts(sf::Points, 3);
             triangleVerts[0] = A;
             triangleVerts[1] = B;
             triangleVerts[2] = C;
 
-            // return doesIntersect(this->vertices, triangleVerts);
-            sf::Vector2f offset = gilbertIntersection(triangleVerts, shape->vertices);
-            return offset;
+            if (separatingAxis(triangleVerts, shape->vertices)) {
+                sf::Vector2f mOffset = gilbertIntersection(triangleVerts, shape->vertices);
+                offset += mOffset;
+            }
         }
     }
+    // return sf::Vector2f(std::min_element(X.begin(), X.end()), std::min_element(Y.begin(), Y.end()));
 
-    return sf::Vector2f();
+    return offset;
 }

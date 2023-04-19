@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "shape.h"
 #include "../math/vector.h"
 #include "../math/rect.h"
@@ -15,6 +16,7 @@ class Concave : public Shape {
     public:
         Concave(sf::VertexArray vertices);
 
+        void update(Window& window) override;
         sf::Vector2f intersects(Shape* shape) override;
 };
 

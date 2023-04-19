@@ -28,10 +28,10 @@ int main(int, char**) {
     Concave floor(floorVerts);
 
     // Boxes
-    Square red(sf::Vector2f(700.0f, 200.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Red);
-    Square green(sf::Vector2f(220.0f, 50.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Green);
-    Square blue(sf::Vector2f(800.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Blue);
-    Square magenta(sf::Vector2f(1120.0f, 150.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Magenta);
+    Square red(sf::Vector2f(470.0f, 100.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Red);
+    Square green(sf::Vector2f(120.0f, 100.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Green);
+    Square blue(sf::Vector2f(800.0f, 100.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Blue);
+    Square magenta(sf::Vector2f(1120.0f, 100.0f), sf::Vector2f(100.0f, 100.0f), sf::Color::Magenta);
 
     // Physics
     StaticBody pFloor(&floor);
@@ -40,23 +40,33 @@ int main(int, char**) {
     RigidBody pBlue(&blue);
     RigidBody pMagenta(&magenta);
 
-    // Collision groups
+    // Collision groups  
     Collision group;
     group.addObject(pFloor);
     group.addObject(pRed);
-    // group.addObject(pGreen);
-    // group.addObject(pBlue);
-    // group.addObject(pMagenta);
+    group.addObject(pGreen);
+    group.addObject(pBlue);
+    group.addObject(pMagenta);
 
 
 
     while(window.open) {
+        // bool unpress = false;
+        // while (!unpress)
+        //     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        //         unpress = true;
+        
         window.events();
         window.clear();
 
         group.update(window);
 
         window.render();
+
+        // bool press = false;
+        // while (!press)
+        //     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        //         press = true;
     }
 
     window.close();

@@ -30,7 +30,7 @@ float projectionOverlap(sf::Vector2<T> a, sf::Vector2<T> b) {
 }
 
 // Collisions
-inline bool seperatingAxis(sf::VertexArray& a, sf::VertexArray& b) { // Cheaper but less accurate
+inline bool separatingAxis(sf::VertexArray& a, sf::VertexArray& b) { // Cheaper but less accurate
     // Projections
     std::vector<sf::Vector2f> aNormals(a.getVertexCount());
     std::vector<sf::Vector2f> bNormals(b.getVertexCount());

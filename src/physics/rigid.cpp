@@ -7,6 +7,8 @@ RigidBody::RigidBody(Shape* shape): StaticBody(shape) {};
 
 void RigidBody::update(Window& window, std::vector<StaticBody*>& objects) {
     this->velocity += (this->acceleration + sf::Vector2f(0.0f, gravity)) * window.deltaTime;
+    this->position += this->velocity * window.deltaTime;
+    StaticBody::update(window, objects);
 
     sf::FloatRect bounding = this->mShape->getBoundingBox();
 
@@ -33,16 +35,24 @@ void RigidBody::update(Window& window, std::vector<StaticBody*>& objects) {
             } */
 
             sf::Vector2f offset = body->intersects(this->mShape);
-            if (offset.x != 0 && offset.y != 0) {
+            if (offset.x != 0 || offset.y != 0) {
                 this->colliding = true;
-                
+
+                // offset += sf::Vector2f(std::sign(offset.x), std::sign(offset.y));
                 this->position += offset;
-                this->acceleration = sf::Vector2f(0.0f, 0.0f);
-                this->velocity = sf::Vector2f(0.0f, 0.0f);
+
+                if (offset.x > 0)
+                    this->velocity.x = std::max(0.0f, this->velocity.x);
+                else if (offset.x < 0)
+                    this->velocity.x = std::min(0.0f, this->velocity.x);
+
+                if (offset.y > 0)
+                    this->velocity.y = std::max(0.0f, this->velocity.y);
+                else if (offset.y < 0)
+                    this->velocity.y = std::min(0.0f, this->velocity.y);
+
+                break;
             }
         }
     }
-
-    this->position += this->velocity * window.deltaTime;
-    StaticBody::update(window, objects);
 }
