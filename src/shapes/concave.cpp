@@ -63,9 +63,6 @@ Concave::Concave(sf::VertexArray vertices): Shape(vertices) {
 
 void Concave::update(Window& window) {
     window.draw(this->vertices);
-
-    for (unsigned int i = 0; i < this->vertices.getVertexCount(); i++)
-        this->vertices[i].color = sf::Color::White;
 }
 
 sf::Vector2f Concave::intersects(Shape* shape) {
@@ -81,12 +78,6 @@ sf::Vector2f Concave::intersects(Shape* shape) {
         sf::FloatRect bounding = triangleBounding(A, B, C);
 
         if (inBounding(mBounding, bounding)) { // Inside triangle bounding box
-            sf::Color colour(i * 10 + 10, i * 12 + 10, i * 13 + 10); // 3
-
-            this->vertices[i].color = colour;
-            this->vertices[(i + 1) % this->vertices.getVertexCount()].color = colour;
-            this->vertices[(i + 2) % this->vertices.getVertexCount()].color = colour;
-
             sf::VertexArray triangleVerts(sf::Points, 3);
             triangleVerts[0] = A;
             triangleVerts[1] = B;
